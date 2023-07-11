@@ -193,7 +193,7 @@ def aymGau(mean,std_up,std_low):
     return np.concatenate(temIGM)
 
 def myFilter(filterName,w,f):
-    b=np.loadtxt('/Users/dalyabaron/Documents/PFS/code/data/Filter/'+str(filterName)+'.dat')
+    b=np.loadtxt('/Users/dalyabaron/Documents/GitHub/PFS_AGN_simulator/code/data/Filter/'+str(filterName)+'.dat')
     fil=Filter(b[:,0], b[:,1], name='newfilt', dtype='photon', unit='Angstrom')
     flux=fil.get_flux(np.array(w)*unit['AA'], np.array(f))
     ABmag=-2.5*np.log10(flux)-fil.AB_zero_mag
@@ -210,10 +210,10 @@ popt, _ = curve_fit(objective, Mi,EW_err)
 a_ew, b_ew = popt
 
 # Load the Vanden-Berk+ 2001 line list
-van01=np.loadtxt('/Users/dalyabaron/Documents/PFS/code/data/Vanden01_lineRatio', dtype='str')
+van01=np.loadtxt('/Users/dalyabaron/Documents/GitHub/PFS_AGN_simulator/code/data/Vanden01_lineRatio', dtype='str')
 
 # Load Iron template
-FeII=np.loadtxt('/Users/dalyabaron/Documents/PFS/code/data/FeII_Mix_Int.dat')
+FeII=np.loadtxt('/Users/dalyabaron/Documents/GitHub/PFS_AGN_simulator/code/data/FeII_Mix_Int.dat')
 Fe2=interp1d(FeII[:,0], FeII[:,1], kind='linear')
 F_fe2=integrate.quad(lambda xx:Fe2(xx),2200,3090)[0]
 flam_Fe2=np.array([Fe2(ww)/F_fe2 for ww in np.arange(1,8000,1)])
@@ -265,7 +265,7 @@ def makeQSO(mbh, Lbol, z, logLedd, return_redshifted=True):
         f_r[low-1:high-1] += [f_line[uu][3]*gaussian(xx, f_line[uu][1], f_line[uu][2]) for xx in np.arange(low, high, 1)]
 
     # add IGM attenuation according to Inoue+14
-    igm_inoue=np.loadtxt('/Users/dalyabaron/Documents/PFS/code/data/IGM/z_'+str(int(z*10)))
+    igm_inoue=np.loadtxt('/Users/dalyabaron/Documents/GitHub/PFS_AGN_simulator/code/data/IGM/z_'+str(int(z*10)))
     temp=aymGau(igm_inoue[:,1],igm_inoue[:,2],igm_inoue[:,3])
     model_IGM=interp1d(igm_inoue[:,0],temp,kind='linear')
     loww=round(min(igm_inoue[:,0]))+1
@@ -292,7 +292,7 @@ def return_typeII_template(wavelength_interp):
     Function returns the type II AGN template by Yuan et al. (2017), interpolated
     to the wavelength given in the input (presumabely the wavelength of the galaxy templates).
     """
-    h = fits.open("Type2s_composite.fits")
+    h = fits.open("/Users/dalyabaron/Documents/GitHub/PFS_AGN_simulator/code/data/Type2s_composite.fits")
     data = h[1].data
 
     wavelength = data['wv']

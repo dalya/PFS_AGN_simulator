@@ -4,13 +4,15 @@ import matplotlib.pyplot as plt
 import time
 from astropy.io import fits
 
-
+from scipy import interpolate
 from scipy.optimize import curve_fit
 import scipy.integrate as integrate
 from scipy.interpolate import interp1d,make_interp_spline, BSpline
 from scipy.stats import truncnorm
 from scipy.integrate import simps
 from scipy.stats import median_abs_deviation
+from random import choices
+
 
 import astropy.units as u
 from pyphot import Filter
@@ -34,7 +36,7 @@ def return_BH_mass(log_M_stars):
 
 ###################### Eddington ratio using the ERDF
 
-aird17=np.loadtxt('data/pledd_all.dat')
+aird17=np.loadtxt('/Users/dalyabaron/Documents/GitHub/PFS_AGN_simulator/code/data/pledd_all.dat')
 
 def ERDF(zmin, zmax, msmin, msmax):
     edd=[aird17[ee,4] for ee in range(len(aird17)) if aird17[ee,0]==zmin \
