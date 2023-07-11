@@ -42,6 +42,9 @@ def return_alpha_opt_distribution():
     Function returns the distribution of alpha_nu_opt, where F_nu ~ nu^alpha_nu_opt from the Shen et al
     quasar catalog. The array will be used to later sample the continuum slope in optical wavelengths
     in the type I mock construction.
+
+    NOTE: it has been decided that we will not use this function and will only simulate blue quasars, 
+    because our goal is to add them to the host galaxy spectrum, which will redden them.
     """
     path = "/Users/dalyabaron/Documents/PFS/code/data/shen_alpha_opt.fit"
     h = fits.open(path)
@@ -80,7 +83,8 @@ def continuum(Lbol, cons):
     
     wave=np.arange(1,8000,1)
     alpha1=np.random.normal(1.76,0.1) # Telfer+2002
-    alpha2=-1*np.random.choice(alpha_sample, 1)[0] # alpha_opt from Shen et al SDSS quasar catalog, includes red quasars
+    #alpha2=-1*np.random.choice(alpha_sample, 1)[0] # alpha_opt from Shen et al SDSS quasar catalog, includes red quasars
+    alpha2=-1*np.random.normal(0.44,0.3) # only blue quasars from Vanden Berk+2001
     alpha3=2.45 # slope of the geometric mean from Vanden Berk+2001
     ratio1=pow(3e18/1100.,-alpha1)/pow(3e18/1100.,-alpha2)
     ratio2=pow(3e18/5000.,-alpha2)*ratio1/pow(3e18/5000.,-alpha3)

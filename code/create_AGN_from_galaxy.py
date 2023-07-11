@@ -20,18 +20,6 @@ from sedpy.smoothing import smoothspec
 from astropy.cosmology import FlatLambdaCDM
 cosmo = FlatLambdaCDM(H0=70 * u.km / u.s / u.Mpc, Tcmb0=2.725 * u.K, Om0=0.3)
 
-h=0.7
-H0=70.0 # km s-1 Mpc-1
-c=299792 #km s-1
-gama=1.86
-Omega_m=0.3
-Omega_v=0.7
-sigma_8=0.84
-def E(z):
-    return np.sqrt(Omega_m*pow(1+z,3)+Omega_v)
-def V_ele(z):
-    return c/H0*cosmo.luminosity_distance(z).value*cosmo.luminosity_distance(z).value/E(z)/(1+z)/(1+z) #unit Mpc^3
-
 #####################################################################################################################
 
 ###################### BH mass from stellar mass
