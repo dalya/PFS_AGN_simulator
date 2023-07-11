@@ -346,11 +346,13 @@ def return_logLOIII(logLx):
 wavelength_interp = numpy.linspace(1800, 10000, 10000)
 flux_norm_ = return_typeII_template(wavelength_interp)
 
-def return_typeII_emission_lines(logLbol, cons):
+def return_typeII_emission_lines(logLbol, z):
     """
     Function returns the type II emission line spectrum (flux density), normalized
     so that the [OIII] luminosity is consistent with the AGN luminosity
     """
+    cons = 4. * np.pi * pow((cosmo.luminosity_distance(z)).to(u.cm).value,2)
+
     logLx = return_logLx(logLbol)
     logLOIII = return_logLOIII(logLx)
     OIII_flux = 10**logLOIII / cons
